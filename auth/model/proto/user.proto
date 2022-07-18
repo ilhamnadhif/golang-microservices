@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option go_package = "user/model/proto";
+
+package proto;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+message User {
+  int64 ID = 1;
+  string Name = 2;
+  string Email = 3;
+  string Password = 4;
+  google.protobuf.Timestamp CreatedAt = 5;
+  google.protobuf.Timestamp UpdatedAt = 6;
+}
+
+message UserCreateReq {
+  string Name = 1;
+  string Email = 2;
+  string Password = 3;
+}
+
+message UserUpdateReq {
+  int64 ID = 1;
+  string Name = 2;
+  string Email = 3;
+  string Password = 4;
+}
+
+message UserID {
+  int64 ID = 1;
+}
+
+message UserEmail {
+  string Email = 1;
+}
+
+service UserService {
+  rpc FindOneByID(UserID) returns (User);
+  rpc FindOneByEmail(UserEmail) returns (User);
+  rpc FindAll(google.protobuf.Empty) returns (stream User);
+  rpc Create(UserCreateReq) returns (User);
+  rpc Update(UserUpdateReq) returns (User);
+  rpc Delete(UserID) returns (google.protobuf.Empty);
+}
