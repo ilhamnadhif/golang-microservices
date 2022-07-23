@@ -12,3 +12,4 @@ DbNumber = 1
 
 [Jwt]
 SigningKey = "asd"
+ExpiresIn = "1h"

@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -114,6 +115,7 @@ func (service *userServiceImpl) Create(ctx context.Context, request *proto.UserC
 }
 
 func (service *userServiceImpl) Update(ctx context.Context, request *proto.UserUpdateReq) (*proto.User, error) {
+	fmt.Println(request)
 	tx := service.DB.Begin()
 	findUser, err := service.UserRepository.FindOneByID(ctx, tx, int(request.ID))
 	if err != nil {
@@ -123,7 +125,7 @@ func (service *userServiceImpl) Update(ctx context.Context, request *proto.UserU
 		}
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
-	user, err := service.UserRepository.Create(ctx, tx, schema.User{
+	user, err := service.UserRepository.Update(ctx, tx, schema.User{
 		ID:        int(request.ID),
 		Name:      request.Name,
 		Email:     request.Email,

@@ -1,0 +1,18 @@
+[Server]
+HostPort = ":6000"
+
+[Database]
+Driver = "mysql"
+HostPort = ":3306"
+Username = "asd"
+Password = "asd"
+Database = "asd"
+
+[Redis]
+HostPort = ":6379"
+Username = ""
+Password = ""
+DbNumber = 1
+
+[Jwt]
+SigningKey = "asd"

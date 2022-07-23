@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"github.com/golang/protobuf/ptypes/empty"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"user/model/proto"
 	"user/service"
@@ -40,10 +41,10 @@ func (server *UserServer) Create(ctx context.Context, request *proto.UserCreateR
 func (server *UserServer) Update(ctx context.Context, request *proto.UserUpdateReq) (*proto.User, error) {
 	return server.UserService.Update(ctx, request)
 }
-func (server *UserServer) Delete(ctx context.Context, request *proto.UserID) (*emptypb.Empty, error) {
+func (server *UserServer) Delete(ctx context.Context, request *proto.UserID) (*empty.Empty, error) {
 	err := server.UserService.Delete(ctx, request)
 	if err != nil {
-		return nil, err
+		return &empty.Empty{}, err
 	}
-	return nil, nil
+	return &empty.Empty{}, nil
 }

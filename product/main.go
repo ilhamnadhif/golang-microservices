@@ -4,20 +4,20 @@ import (
 	"google.golang.org/grpc"
 	"log"
 	"net"
-	"user/app"
-	"user/config"
-	"user/handler"
-	"user/model/proto"
-	"user/repository"
-	"user/service"
+	"product/app"
+	"product/config"
+	"product/handler"
+	"product/model/proto"
+	"product/repository"
+	"product/service"
 )
 
 func main() {
 	initConfig := config.InitConfig()
 	db := app.InitGorm(initConfig.Database)
-	userRepository := repository.NewUserRepositoryImpl()
-	userService := service.NewUserServiceImpl(db, userRepository)
-	userHandler := handler.NewUserHandler(userService)
+	productRepository := repository.NewProductRepositoryImpl()
+	productService := service.NewProductServiceImpl(db, productRepository)
+	productHandler := handler.NewProductHandler(productService)
 
 	lis, err := net.Listen("tcp", initConfig.Server.HostPort)
 	if err != nil {
@@ -26,7 +26,7 @@ func main() {
 	log.Printf("server run on port %v", initConfig.Server.HostPort)
 
 	s := grpc.NewServer()
-	proto.RegisterUserServiceServer(s, &userHandler)
+	proto.RegisterProductServiceServer(s, &productHandler)
 
 	if err := s.Serve(lis); err != nil {
 		log.Fatalln(err)

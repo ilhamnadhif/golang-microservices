@@ -5,6 +5,7 @@ import (
 	"auth/config"
 	"auth/handler"
 	"auth/model/proto"
+	"auth/service"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -14,7 +15,8 @@ func main() {
 	initConfig := config.InitConfig()
 	userService, connClose := app.InitUserService(initConfig.Service[config.User])
 	defer connClose()
-	authHandler := handler.NewAuthHandler(userService)
+	authService := service.NewAuthService(userService)
+	authHandler := handler.NewAuthHandler(authService)
 
 	lis, err := net.Listen("tcp", initConfig.Server.HostPort)
 	if err != nil {
