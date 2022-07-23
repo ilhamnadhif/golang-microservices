@@ -1,0 +1,18 @@
+[Server]
+HostPort = ":6001"
+
+[Service.user]
+HostPort = ":6000"
+[Service.auth]
+HostPort = ":6001"
+[Service.product]
+HostPort = ":6002"
+
+[Redis]
+HostPort = ":6379"
+Username = ""
+Password = ""
+DbNumber = 1
+
+[Jwt]
+SigningKey = "asd"
